@@ -23,6 +23,6 @@ class Address extends Model
 
     public function billet()
     {
-        return $this->hasOne(Billet::class, 'address_id');
+        return $this->hasOne(Billet::class);
     }
 }

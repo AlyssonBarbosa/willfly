@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SandBoxController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('billet.index');
-});
+Route::get('/',[SandBoxController::class, 'index'])->name('billet.index');
+
+
+Route::post('/billet', [SandBoxController::class, 'store'])->name('billet.store');
+Route::delete('/billet/{billet}', [SandBoxController::class, 'destroy'])->name('billet.destroy');
+Route::get('/billet', [SandBoxController::class, 'create'])->name('billet.create');

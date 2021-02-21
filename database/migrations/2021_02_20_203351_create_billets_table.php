@@ -19,9 +19,11 @@ class CreateBilletsTable extends Migration
             $table->string('cpf_cnpj');
             $table->foreignId('address_id');
             $table->dateTimeTz('expiration');
-            $table->string('fees')->nullable();
+            $table->double('fees')->nullable();
             $table->integer('price');
             $table->string('instructions')->nullable();
+            $table->string('code')->nullable();
+            $table->string('status')->nullable();
             $table->softDeletes();           
             $table->timestamps();
         });
@@ -34,6 +36,6 @@ class CreateBilletsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('billet');
+        Schema::dropIfExists('billets');
     }
 }
