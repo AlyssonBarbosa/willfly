@@ -38,8 +38,15 @@
     @include('layouts.navbar')
     <!-- Begin page -->
     <div id="layout-wrapper">
-
-
+        @if(!$errors->any())
+            <div id="preloader">
+                <div id="status">
+                    <div class="spinner">
+                        <i class="ri-loader-line spin-icon"></i>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="page-content">
             <div class="container-fluid">
                 @if($errors->any())

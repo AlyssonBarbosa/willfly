@@ -59,13 +59,6 @@
 
         <script src="{{ asset('js/pages/form-advanced.init.js') }}"></script>
 
-        <!-- Required datatable js -->
-        <script src="{{ asset('libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-        <script src="https://themesdesign.in/nazox/layouts/vertical/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-    
-
-        <script src="{{ asset('js/pages/ecommerce-datatables.init.js') }}"></script>
-
         <script src="{{ asset('js/app.js') }}"></script>
 
         @yield('scripts')

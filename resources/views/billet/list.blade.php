@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
 <div class="row">
     <div class="col-lg-12">
         @if($errors->any())
@@ -70,6 +71,11 @@
                                 </td>
                             </tr>
                             @endforeach
+                            @if(count($billets) == 0)
+                            <tr>
+                                <p> Nenhum boleto cadastrado </p>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                     <nav aria-label="Page navigation example">
