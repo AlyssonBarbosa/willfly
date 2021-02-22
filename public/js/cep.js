@@ -5,22 +5,10 @@ function limpa_formulário_cep() {
     document.getElementById('uf').value = ("");
 }
 
-function show() {
-    let cpf_cnpj = document.getElementById('cpf_cnpj');
-
-    if (cpf_cnpj.value.length == 14) {
-        console.log(cpf_cnpj.length)
-        console.log(document.getElementById('cpf_cnpj').setAttribute('data-inputmask', "'mask': '99.999/9799.99', 'greedy' : false"))
-    } else {
-        console.log(cpf_cnpj.length)
-    }
-
-}
-
 function meu_callback(conteudo) {
     if (!("erro" in conteudo)) {
         //Atualiza os campos com os valores.
-        document.getElementById('rua').value = (conteudo.logradouro) + ', ' + (conteudo.bairro);
+        document.getElementById('rua').value = (conteudo.logradouro) + (conteudo.bairro);
         document.getElementById('cidade').value = (conteudo.localidade);
         document.getElementById('uf').value = (conteudo.uf);
         document.getElementById('erro_cep').style.display = 'none';
