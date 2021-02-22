@@ -6,7 +6,7 @@
                     <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topnav-menu-content" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
                         <span class="navbar-toggler-icon"></span>
                     </button> -->
-                    <div class="col-sm-6" data-toggle="collapse" data-target="#topnav-menu-content">
+                    <div class="col-sm-6 navbar-toggler" data-toggle="collapse" data-target="#topnav-menu-content">
                         <div class="dropdown mt-sm-0">
                             <a href="ui-dropdowns.html#" class=" dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="ri-home-fill ri-2x"></i>
