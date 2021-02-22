@@ -1,7 +1,4 @@
 <!doctype html>
-<html lang="en">
-
-<!doctype html>
 <html lang="pt-BR">
 
 <head>
