@@ -5,3 +5,7 @@
 .erro-cep{
     display: none;
 }
+
+.erro_request{
+    display: none;
+}

@@ -26,4 +26,3 @@ Integrar API da easypag
 ## Observações
 
 1. O endereço é pesquisado automaticamente ao digitar o CEP que deve ser um CEP valido (ex. 60831498).
-2. 

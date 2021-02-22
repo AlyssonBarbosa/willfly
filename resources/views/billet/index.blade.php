@@ -58,6 +58,7 @@
                     {{ session()->get('mensagem') }}
                 </div>
                 @endif
+                <div class="alert alert-danger erro_request" id="erro_request" role="alert">  </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">

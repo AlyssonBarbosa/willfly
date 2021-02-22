@@ -18,8 +18,10 @@ $(document).ready(function () {
                 cont++;
             }
         });
-        if (cont !== 0) {
-            document.getElementById('')
+        if (cont !== 0) {            
+            console.log('erro')
+            document.getElementById("erro_request").style.display = 'block';
+            document.getElementById("erro_request").innerText = 'Por favor preencha todos os campos obrigatórios!';
         }
     });
 

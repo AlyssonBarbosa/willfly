@@ -21,7 +21,7 @@ class SandBoxController extends Controller
     {
         try {
 
-            $billets = Billet::withTrashed()->paginate(10);
+            $billets = Billet::withTrashed()->orderBy('created_at', 'DESC')->paginate(10);
 
             return view('billet.list', compact('billets'));
         } catch (\Throwable $th) {
