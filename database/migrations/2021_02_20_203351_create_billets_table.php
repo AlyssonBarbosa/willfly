@@ -20,7 +20,7 @@ class CreateBilletsTable extends Migration
             $table->foreignId('address_id');
             $table->dateTimeTz('expiration');
             $table->double('fees')->nullable();
-            $table->integer('price');
+            $table->decimal('price', 9, 2);
             $table->string('instructions')->nullable();
             $table->string('code')->nullable();
             $table->string('status')->nullable();

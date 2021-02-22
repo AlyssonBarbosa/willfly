@@ -4,6 +4,8 @@ namespace App\Http\Requests\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\SanitizeTraitRequest;
+use App\Rules\CpfValidator;
+use App\Rules\CnpjValidator;
 
 class BilletRequest extends FormRequest
 {
@@ -20,32 +22,14 @@ class BilletRequest extends FormRequest
     }
 
     /**
-     * @return array
-     */
-    public function sanitize()
-    {
-        $input = $this->all();
-
-        if (isset($input['price'])) {
-            $input['price'] = str_replace('.', '', $input['price']);
-            $input['price'] = (int) str_replace(',', '.', $input['price']);
-        }
-
-        $this->replace($input);
-
-        return $this->all();
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
     public function rules()
-    {
-        return [
-            'name' => ['required', 'string', 'max:255', 'min:3'],
-            'cpf_cnpj' => ['required', 'string', 'min:14', 'max:18'],
+    {        
+        $rules =  [
+            'name' => ['required', 'string', 'max:255', 'min:3'],            
             'expiration' => ['required', 'date'],
             'price' => ['required'],
             'cep' => ['required', 'string'],
@@ -55,12 +39,15 @@ class BilletRequest extends FormRequest
             'number' => ['numeric', 'required'],
             'complement' => ['max:255']
         ];
-    }
 
-    public function messages()
-    {
-        return [
-            'cpf_cnpj.min' => 'CPF/CNPJ invalido!',
-        ];
+        $input = $this->all();
+
+        if(strlen($input['cpf_cnpj']) <= 14) {            
+            $rules['cpf_cnpj'] = ['required', 'string', 'min:14', 'max:14', new CpfValidator()];
+        }else{            
+            $rules['cpf_cnpj'] = ['required', 'string', 'min:17', 'max:18', new CnpjValidator()];
+        }
+
+        return $rules;
     }
 }

@@ -60,6 +60,13 @@ class SandBoxController extends Controller
             ]);
 
             if ($address) {
+                
+                $request->price =  $this->formatPrice($request->price);                
+
+                if($request->price == null){
+                    throw new Exception("O valor do boleto deve ser maior que R$5,00");                   
+                }
+
                 tap(Billet::create([
                     'name' => $request->name,
                     'cpf_cnpj' => $request->cpf_cnpj,
@@ -182,5 +189,13 @@ class SandBoxController extends Controller
         } catch (\Throwable $th) {
             dd($th);
         }
+    }
+
+    public function formatPrice($price)
+    {
+        
+        $price = number_format(str_replace(",",".",str_replace(".","",$price)), 2, '.', '');  
+                
+        return $price >= 5 ?  $price : null;
     }
 }

@@ -39,7 +39,7 @@ $(document).ready(function () {
             $("#loading").hide();
             $("#billing").click();
             $('#register').prop('disabled', false);      
-            message('error','Ops...','Existem campos em branco!');
+            message('error','Ops...','Um erro aconteceu!');
         }
         
     });
