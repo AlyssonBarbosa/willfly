@@ -221,7 +221,7 @@
                                                             </div>
                                                             <div>
                                                                 <h5>Lembre-se de conferir suas informações</h5>
-                                                                <button class="btn btn-success" type="submit"> Gerar Boleto </button>
+                                                                <button class="btn btn-success" id="register" type="submit"> Gerar Boleto </button>
                                                             </div>
                                                         </div>
                                                     </div>

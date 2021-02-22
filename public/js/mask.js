@@ -13,6 +13,8 @@ $(document).ready(function () {
 
     $("#formu").submit(function () {
         var cont = 0;
+        $('#register').prop('disabled', true);
+
         $("#formu input").each(function () {
             if ($(this).val() == "") {
                 cont++;
@@ -22,6 +24,7 @@ $(document).ready(function () {
             console.log('erro')
             document.getElementById("erro_request").style.display = 'block';
             document.getElementById("erro_request").innerText = 'Por favor preencha todos os campos obrigatórios!';
+            $('#register').prop('disabled', false);      
         }
     });
 

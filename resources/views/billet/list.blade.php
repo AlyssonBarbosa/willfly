@@ -65,7 +65,7 @@
                                     <form action="{{ route('billet.destroy', $billet->id) }}" id="destroy{{$billet->id}}" method="POST">
                                         @csrf
                                         {{ method_field('DELETE') }}
-                                        <a onclick="document.getElementById('destroy{{$billet->id}}').submit();" type="submit" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cancelar"><i class="ri-delete-bin-2-line"></i></i></a>
+                                        <a onclick="send('{{$billet->id}}')" type="submit" class="text-danger" id="send" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cancelar"><i class="ri-delete-bin-2-line"></i></i></a>
                                     </form>
                                     @endif
                                 </td>
