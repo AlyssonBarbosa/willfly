@@ -18,10 +18,10 @@
 
     <!-- Bootstrap Css -->
     <link href="{{ asset('css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
-    
+
     <!-- App Css-->
     <link href="{{ asset('css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
-    
+
     <!-- Custom CSS -->
     <link href="{{ asset('css/custom.css') }}" id="app-style" rel="stylesheet" type="text/css" />
 
@@ -74,6 +74,13 @@
                         </div>
                     </div>
                 </div>
+                @if($errors->any())
+                    @foreach($errors->all() as $error)
+                    <div class="alert alert-danger" role="alert">
+                        {{ $error }}
+                    </div>
+                    @endforeach
+                @endif
                 <div class="alert alert-danger erro_request" id="erro_request" role="alert"> </div>
                 <div class="row">
                     <div class="col-lg-12">
@@ -282,16 +289,16 @@
     <script src="{{ asset('libs/twitter-bootstrap-wizard/prettify.js')}}"></script>
     <!-- ecommerce-checkout init -->
     <script src="{{ asset('js/pages/ecommerce-checkout.init.js') }}"></script>
-    
+
     <script src="{{ asset('js/pages/form-validation.init.js') }}"></script>
 
     <!-- form mask -->
     <script src="{{ asset('libs/inputmask/jquery.inputmask.min.js') }}"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
     <!-- form mask init -->
-    <script src="{{ asset('js/pages/form-mask.init.js') }}"></script>    
+    <script src="{{ asset('js/pages/form-mask.init.js') }}"></script>
 
     <!-- Sweet Alerts js -->
     <script src="{{ asset('libs/sweetalert2/sweetalert2.min.js') }}"></script>

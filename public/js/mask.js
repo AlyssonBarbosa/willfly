@@ -24,17 +24,24 @@ $(document).ready(function () {
         $('#register').prop('disabled', true);
         $("#loading").show();
 
-        $("#formu input").each(function () {
-            if ($(this).val() == "") {
-                cont++;
-            }
-        });
+        
+        $("#formu input").each(function () {    
+            
+            if($(this).attr("id") !== 'instructions' && $(this).attr("id") !== 'fees' && $(this).attr("id") !== undefined){
+                console.log($(this).attr("id"))  
+                if ($(this).val() == "") {
+                    cont++;
+                }
+            }            
+            
+        });        
         if (cont !== 0) {            
             $("#loading").hide();
             $("#billing").click();
             $('#register').prop('disabled', false);      
             message('error','Ops...','Existem campos em branco!');
         }
+        
     });
 
     var options = {

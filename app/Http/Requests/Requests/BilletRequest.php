@@ -56,4 +56,11 @@ class BilletRequest extends FormRequest
             'complement' => ['max:255']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'cpf_cnpj.min' => 'CPF/CNPJ invalido!',
+        ];
+    }
 }

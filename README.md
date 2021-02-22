@@ -19,9 +19,9 @@ Integrar API da easypag
 ## Instalação
 
 1. composer install
-2. cp .env.exemple .env
-3. php artisan migrate
-4. php artisan serve
+3. cp .env.exemple .env
+4. php artisan migrate
+5. php artisan serve
 
 ## Observações
 
