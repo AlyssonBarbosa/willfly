@@ -1,5 +1,7 @@
 function send(id){
-    console.log('ola');
+    document.getElementById('loading').style.display = 'block';
     document.getElementById('send').remove();
     document.getElementById('destroy' + id).submit();
 }    
+
+

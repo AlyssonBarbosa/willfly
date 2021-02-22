@@ -11,9 +11,18 @@ $(document).ready(function () {
         reverse: true
     });
 
+    function message(icon, title, text){
+        Swal.fire({
+            icon: icon,
+            title: title,
+            text: text,        
+        })
+    }
+
     $("#formu").submit(function () {
         var cont = 0;
         $('#register').prop('disabled', true);
+        $("#loading").show();
 
         $("#formu input").each(function () {
             if ($(this).val() == "") {
@@ -21,13 +30,12 @@ $(document).ready(function () {
             }
         });
         if (cont !== 0) {            
-            console.log('erro')
-            document.getElementById("erro_request").style.display = 'block';
-            document.getElementById("erro_request").innerText = 'Por favor preencha todos os campos obrigatórios!';
+            $("#loading").hide();
+            $("#billing").click();
             $('#register').prop('disabled', false);      
+            message('error','Ops...','Existem campos em branco!');
         }
     });
-
 
     var options = {
         onKeyPress: function (cpf, ev, el, op) {

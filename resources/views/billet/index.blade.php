@@ -13,12 +13,15 @@
 
     <link rel="stylesheet" href="{{asset('libs/twitter-bootstrap-wizard/prettify.css') }}">
 
+    <!-- Sweet Alert-->
+    <link href="{{ asset('libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+
     <!-- Bootstrap Css -->
     <link href="{{ asset('css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
-    <!-- Icons Css -->
-    <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    
     <!-- App Css-->
     <link href="{{ asset('css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    
     <!-- Custom CSS -->
     <link href="{{ asset('css/custom.css') }}" id="app-style" rel="stylesheet" type="text/css" />
 
@@ -36,29 +39,42 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
         @if(!$errors->any())
-            <div id="preloader">
-                <div id="status">
-                    <div class="spinner">
-                        <i class="ri-loader-line spin-icon"></i>
-                    </div>
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner">
+                    <i class="ri-loader-line spin-icon"></i>
                 </div>
             </div>
+        </div>
         @endif
         <div class="page-content">
             <div class="container-fluid">
-                @if($errors->any())
-                @foreach($errors->all() as $error)
-                <div class="alert alert-danger" role="alert">
-                    {{ $error }}
+                <div class="row text-center mb-4 request" id="loading">
+                    <div class="col-md-12">
+                        <div class="spinner-grow text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-secondary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-success" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-danger" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-warning" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-info" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
                 </div>
-                @endforeach
-                @endif
-                @if(session()->has('mensagem'))
-                <div class="alert alert-success" role="alert">
-                    {{ session()->get('mensagem') }}
-                </div>
-                @endif
-                <div class="alert alert-danger erro_request" id="erro_request" role="alert">  </div>
+                <div class="alert alert-danger erro_request" id="erro_request" role="alert"> </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
@@ -66,20 +82,20 @@
                                 <div id="checkout-nav-pills-wizard" class="twitter-bs-wizard">
                                     <ul class="twitter-bs-wizard-nav">
                                         <li class="nav-item">
-                                            <a href="#billing-info" class="nav-link" data-toggle="tab">
+                                            <a href="#billing-info" class="nav-link" id="billing" data-toggle="tab">
                                                 <span class="step-number">01</span>
                                                 <span class="step-title">Pessoais</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#shipping-info" class="nav-link" data-toggle="tab">
+                                            <a href="#shipping-info" class="nav-link" id="shipping" data-toggle="tab">
                                                 <span class="step-number">02</span>
                                                 <span class="step-title">Dados Boleto</span>
                                             </a>
                                         </li>
 
                                         <li class="nav-item">
-                                            <a href="#payment-info" class="nav-link" data-toggle="tab">
+                                            <a href="#payment-info" class="nav-link" id="payment" data-toggle="tab">
                                                 <span class="step-number">03</span>
                                                 <span class="step-title">Confirmar</span>
                                             </a>
@@ -94,8 +110,8 @@
                                                         <div class="row">
                                                             <div class="col-lg-4">
                                                                 <div class="form-group mb-4">
-                                                                    <label for="name">Nome/Razão Social</label>
-                                                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
+                                                                    <label for="name">Nome/Razão Social <span class="required-span">*</span> </label>
+                                                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" autofocus required>
                                                                     <div class="invalid-feedback">
                                                                         Campo obrigatório!
                                                                     </div>
@@ -103,7 +119,7 @@
                                                             </div>
                                                             <div class="col-lg-4">
                                                                 <div class="form-group mb-4">
-                                                                    <label for="cpf_cnpj">CPF/CNPJ</label>
+                                                                    <label for="cpf_cnpj">CPF/CNPJ <span class="required-span">*</span></label>
                                                                     <input type="text" class="form-control" value="{{ old('cpf_cnpj') }}" name="cpf_cnpj" id="cpf_cnpj" required>
                                                                     <div class="invalid-feedback">
                                                                         Campo obrigatório!
@@ -112,7 +128,7 @@
                                                             </div>
                                                             <div class="col-lg-4">
                                                                 <div class="form-group mb-4">
-                                                                    <label for="cep">CEP</label>
+                                                                    <label for="cep">CEP <span class="required-span">*</span></label>
                                                                     <input name="cep" type="text" class="form-control" id="cep" size="10" value="{{ old('cep') }}" maxlength="9" placeholder="99999-999" onblur="pesquisacep(this.value);" required />
                                                                     <div class="invalid-feedback">
                                                                         Campo obrigatório!
@@ -126,7 +142,7 @@
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="form-group mb-4">
-                                                                    <label for="rua">Logradouro</label>
+                                                                    <label for="rua">Logradouro <span class="required-span">*</span></label>
                                                                     <input name="public_place" type="text" class="form-control" id="rua" size="60" value="{{ old('public_place') }}" required />
                                                                     <div class="invalid-feedback">
                                                                         Campo obrigatório!
@@ -136,14 +152,14 @@
 
                                                             <div class="col-lg-3">
                                                                 <div class="form-group mb-4">
-                                                                    <label for="cidade">Cidade</label>
+                                                                    <label for="cidade">Cidade <span class="required-span">*</span></label>
                                                                     <input name="city" type="text" id="cidade" class="form-control" size="40" required value="{{ old('city') }}" />
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-lg-1">
                                                                 <div class="form-group mb-4">
-                                                                    <label for="uf">UF</label>
+                                                                    <label for="uf">UF <span class="required-span">*</span></label>
                                                                     <input name="uf" type="text" id="uf" size="2" class="form-control" required value="{{ old('uf') }}" />
                                                                     <div class="invalid-feedback">
                                                                         Campo obrigatório!
@@ -153,7 +169,7 @@
 
                                                             <div class="col-lg-2">
                                                                 <div class="form-group mb-4">
-                                                                    <label for="numero">Numero</label>
+                                                                    <label for="numero">Numero <span class="required-span">*</span></label>
                                                                     <input name="number" type="text" id="numero" class="form-control" required value="{{ old('number') }}" />
                                                                     <div class="invalid-feedback">
                                                                         Campo obrigatório!
@@ -161,9 +177,9 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-lg-8">
+                                                            <div class="col-lg-12">
                                                                 <div class="form-group mb-4">
-                                                                    <label for="complemento">Complemento</label>
+                                                                    <label for="complemento">Complemento <span class="required-span">*</span></label>
                                                                     <input name="complement" type="text" id="complemento" class="form-control" value="{{ old('complement') }}" required />
                                                                     <div class="invalid-feedback">
                                                                         Campo obrigatório!
@@ -182,7 +198,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-2">
                                                         <div class="form-group mb-8">
-                                                            <label for="complemento">Valor</label>
+                                                            <label for="complemento">Valor <span class="required-span">*</span></label>
                                                             <input name="price" type="text" id="valor" class="form-control" required />
                                                             <div class="invalid-feedback">
                                                                 Campo obrigatório!
@@ -197,7 +213,7 @@
                                                     </div>
                                                     <div class="col-lg-2">
                                                         <div class="form-group mb-4">
-                                                            <label for="expiration">Data de Vencimento</label>
+                                                            <label for="expiration">Data de Vencimento <span class="required-span">*</span></label>
                                                             <input id="expiration" type="date" value="{{ old('expiration') }}" name="expiration" class="form-control" required>
                                                             <div class="invalid-feedback">
                                                                 Campo obrigatório!
@@ -258,33 +274,49 @@
     <script src="{{ asset('libs/node-waves/waves.min.js') }}"></script>
     <script src="{{ asset('libs/select2/js/select2.min.js') }}"></script>
 
+    <script src="{{ asset('libs/parsleyjs/parsley.min.js') }}"></script>
+
     <!-- twitter-bootstrap-wizard js -->
     <script src="{{ asset('libs/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js')}}"></script>
 
     <script src="{{ asset('libs/twitter-bootstrap-wizard/prettify.js')}}"></script>
     <!-- ecommerce-checkout init -->
     <script src="{{ asset('js/pages/ecommerce-checkout.init.js') }}"></script>
-
-    <script src="{{ asset('js/pages/form-advanced.init.js') }}"></script>
-
+    
     <script src="{{ asset('js/pages/form-validation.init.js') }}"></script>
 
     <!-- form mask -->
     <script src="{{ asset('libs/inputmask/jquery.inputmask.min.js') }}"></script>
-
-    <!-- <script src="{{ asset('mask/dist/jquery.mask.js') }}"></script> -->
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
     <!-- form mask init -->
-    <script src="{{ asset('js/pages/form-mask.init.js') }}"></script>
+    <script src="{{ asset('js/pages/form-mask.init.js') }}"></script>    
 
-    <script src="{{ asset('js/pages/form-validation.init.js') }}"></script>
+    <!-- Sweet Alerts js -->
+    <script src="{{ asset('libs/sweetalert2/sweetalert2.min.js') }}"></script>
+
+    <!-- Sweet alert init js-->
+    <script src="{{ asset('js/pages/sweet-alerts.init.js') }}"></script>
 
     <script src="{{ asset('js/app.js') }}"></script>
 
     <script src="{{ asset('js/cep.js') }}"></script>
 
     <script src="{{ asset('js/mask.js') }}"></script>
+
+    @if($errors->any())
+    <script>
+        function message(icon, title, text) {
+            Swal.fire({
+                icon: icon,
+                title: title,
+                text: text,
+            })
+        }
+        message('error', 'Ops...', 'Verifique os erros que aconteceram');
+    </script>
+    @endif
 
 </body>
 

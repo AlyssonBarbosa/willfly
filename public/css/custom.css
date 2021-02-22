@@ -9,3 +9,11 @@
 .erro_request{
     display: none;
 }
+
+.request {
+    display: none;
+}
+
+.required-span {
+    color: red;
+}

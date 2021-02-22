@@ -7,6 +7,9 @@
     <meta content="José Alysson" name="author" />
     <link rel="stylesheet" href="{{asset('libs/twitter-bootstrap-wizard/prettify.css') }}">
 
+    <!-- Sweet Alert-->
+    <link href="{{ asset('libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+
     <!-- Bootstrap Css -->
     <link href="{{ asset('css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -33,13 +36,13 @@
         <!-- ============================================================== -->
         <!-- <div class="main-content"> -->
 
-            <div class="page-content">
-                <div class="container-fluid">
-                    @yield('content')
-                </div> <!-- container-fluid -->
-            </div>
-            <!-- End Page-content -->
-            <!-- @include('layouts.footer') -->
+        <div class="page-content">
+            <div class="container-fluid">
+                @yield('content')
+            </div> <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+        <!-- @include('layouts.footer') -->
         <!-- </div> -->
         <!-- end main content-->
 
@@ -57,11 +60,32 @@
         <!-- ecommerce-checkout init -->
         <script src="{{ asset('js/pages/ecommerce-checkout.init.js') }}"></script>
 
-        <script src="{{ asset('js/pages/form-advanced.init.js') }}"></script>
+        <script src=" {{ asset('libs/datatables.net/js/jquery.dataTables.min.js') }} "></script>         
 
         <script src="{{ asset('js/app.js') }}"></script>
 
-        <script src="{{ asset('js/custom.js') }}"></script>
+        <script src="{{ asset('js/custom.js') }}"></script>        
+
+        <script src="{{ asset('js/cep.js') }}"></script>        
+
+        <!-- Sweet Alerts js -->
+        <script src="{{ asset('libs/sweetalert2/sweetalert2.min.js') }}"></script>
+
+        <!-- Sweet alert init js-->
+        <script src="{{ asset('js/pages/sweet-alerts.init.js') }}"></script>
+
+        @if(session()->has('message'))
+        <script>
+            function message(icon, title, text) {
+                Swal.fire({
+                    icon: icon,
+                    title: title,
+                    text: text,
+                })
+            }
+            message('success', 'Sucesso', 'Operação realizada com sucesso!');
+        </script>
+        @endif
 
         @yield('scripts')
     </div>
