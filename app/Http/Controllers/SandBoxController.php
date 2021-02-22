@@ -6,7 +6,9 @@ use App\Http\Requests\Requests\BilletRequest;
 use App\Http\SandBoxClient;
 use App\Models\Address;
 use App\Models\Billet;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SandBoxController extends Controller
 {
@@ -19,7 +21,7 @@ class SandBoxController extends Controller
     {
         try {
 
-            $billets = Billet::withTrashed()->paginate(1);
+            $billets = Billet::withTrashed()->paginate(10);
 
             return view('billet.list', compact('billets'));
         } catch (\Throwable $th) {
@@ -45,6 +47,8 @@ class SandBoxController extends Controller
      */
     public function store(BilletRequest $request)
     {
+        DB::beginTransaction();
+
         try {
             $address = Address::create([
                 'cep' => $request->cep,
@@ -52,7 +56,7 @@ class SandBoxController extends Controller
                 'public_place' => $request->public_place,
                 'number' => $request->number,
                 'complement' => $request->complement,
-                'uf' => $request->uf,                
+                'uf' => $request->uf,
             ]);
 
             if ($address) {
@@ -66,14 +70,19 @@ class SandBoxController extends Controller
                     'address_id' => $address->id,
                     'status' => 'Aguardando Pagamento'
                 ]), function (Billet $billet) {
-                    $this->createBillet($billet);
-                    
+
+                    $retorno = $this->createBillet($billet);
+                    if (isset($retorno['erro'])) {
+                        throw new Exception($retorno['errors'][0]);
+                    }
                 });
 
-                return redirect('/')->with('message',"Boleto gerado!");
+                DB::commit();
+                return redirect('/')->with('message', "Boleto gerado!");
             }
         } catch (\Throwable $th) {
-            dd($th);
+            DB::rollback();
+            return back()->withErrors($th->getMessage());
         }
     }
 
@@ -86,12 +95,12 @@ class SandBoxController extends Controller
     public function destroy(Billet $billet)
     {
         try {
-            if($this->cancelBillet($billet)){
+            if ($this->cancelBillet($billet)) {
                 $billet->delete();
                 $billet->update(['status' => 'Cancelado']);
-    
+
                 return back()->with('message', 'Boleto cancelado!');
-            }   
+            }
         } catch (\Throwable $th) {
             return back()->withErrors($th->getMessage());
         }
@@ -101,13 +110,13 @@ class SandBoxController extends Controller
     {
         $url = "invoices/$billet->code/cancel";
 
-        if(!$billet->deleted_at){
+        if (!$billet->deleted_at) {
             $clientSandBox = new SandBoxClient();
 
-            $response = $clientSandBox->request($url, [], 'POST');            
-            if($response['payment']['status'] == 5){
+            $response = $clientSandBox->request($url, [], 'POST');
+            if ($response['payment']['status'] == 5) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
@@ -153,13 +162,22 @@ class SandBoxController extends Controller
             $clientSandBox = new SandBoxClient();
 
             $response = $clientSandBox->request($url, $data, 'POST');
-            
-            if ($response['id']) {
+
+            if (isset($response['id'])) {
                 $billet->update(['code' => $response['id']]);
-                
-                 return 'boleto gerado';
+
+                return 'boleto gerado';
             } else {
-                return 'Erro ao gerar boleto!';
+
+                $errors = [];
+                foreach ($response['errors'] as $key => $err) {
+                    $errors[] = $err['msg'];
+                }
+
+                return [
+                    'erro' => true,
+                    'errors' => $errors
+                ];
             }
         } catch (\Throwable $th) {
             dd($th);

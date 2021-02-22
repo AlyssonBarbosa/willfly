@@ -18,13 +18,7 @@
             <div class="card-body  pt-0">
                 <ul class="nav nav-tabs nav-tabs-custom mb-4">
                     <li class="nav-item">
-                        <a class="nav-link font-weight-bold p-3 active" href="ecommerce-orders.html#">All Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link p-3 font-weight-bold" href="ecommerce-orders.html#">Active</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link p-3 font-weight-bold" href="ecommerce-orders.html#">Unpaid</a>
+                        <a class="nav-link font-weight-bold p-3 active" href="ecommerce-orders.html#">Boletos</a>
                     </li>
                 </ul>
                 <div class="table-responsive text-center">
@@ -78,18 +72,17 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{$billets->lastPage()}}
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
                             <li class="page-item {{ $billets->onFirstPage() ? 'disabled' : '' }}">
                                 <a class="page-link" href="{{ $billets->previousPageUrl() }}" tabindex="-1">Anterior</a>
                             </li>
                             @for($i = 0; $i < $billets->lastPage(); $i++)
-                            <li class="page-item"><a class="page-link" href="{{ $billets->url($i + 1) }}"> {{ $i + 1 }} </a></li>
-                            @endfor
-                            <li class="page-item {{ $billets->currentPage() == $billets->lastPage() ? 'disabled' : '' }}">
-                                <a class="page-link" href="{{ $billets->nextPageUrl() }}">Próximo</a>
-                            </li>
+                                <li class="page-item {{ $billets->currentPage() == $i + 1 ? 'active' : '' }}"><a class="page-link" href="{{ $billets->url($i + 1) }}"> {{ $i + 1 }} </a></li>
+                                @endfor
+                                <li class="page-item {{ $billets->currentPage() == $billets->lastPage() ? 'disabled' : '' }}">
+                                    <a class="page-link" href="{{ $billets->nextPageUrl() }}">Próximo</a>
+                                </li>
                         </ul>
                     </nav>
                 </div>

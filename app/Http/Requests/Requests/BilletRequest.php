@@ -3,9 +3,12 @@
 namespace App\Http\Requests\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\SanitizeTraitRequest;
 
 class BilletRequest extends FormRequest
 {
+    use SanitizeTraitRequest;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,7 +27,8 @@ class BilletRequest extends FormRequest
         $input = $this->all();
 
         if (isset($input['price'])) {
-            $input['price'] = preg_replace("/[^0-9]/", "", $input['price']);
+            $input['price'] = str_replace('.', '', $input['price']);
+            $input['price'] = (int) str_replace(',', '.', $input['price']);
         }
 
         $this->replace($input);
@@ -43,13 +47,13 @@ class BilletRequest extends FormRequest
             'name' => ['required', 'string', 'max:255', 'min:3'],
             'cpf_cnpj' => ['required', 'string', 'min:14', 'max:18'],
             'expiration' => ['required', 'date'],
-            'price' => ['required', 'numeric'],
+            'price' => ['required'],
             'cep' => ['required', 'string'],
             'city' => ['required', 'string'],
             'uf' => ['required', 'string'],
             'public_place' => ['string'],
             'number' => ['numeric', 'required'],
-            'complement' => ['string', 'max:255']
+            'complement' => ['max:255']
         ];
     }
 }

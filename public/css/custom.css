@@ -1,3 +1,7 @@
 .navbar-dark .navbar-nav .nav-link {
     color: rgba(255,255,255,1) !important;
 }
+
+.erro-cep{
+    display: none;
+}

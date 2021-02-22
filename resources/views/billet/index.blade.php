@@ -80,33 +80,39 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <form method="POST" action="{{ route('billet.store') }}">
+                                    <form method="POST" action="{{ route('billet.store') }}" id="formu" class="needs-validation" novalidate>
                                         @csrf
                                         <div class="tab-content twitter-bs-wizard-tab-content">
                                             <div class="tab-pane active" id="billing-info">
-
-
                                                 <div>
-
                                                     <div>
-
                                                         <div class="row">
                                                             <div class="col-lg-4">
                                                                 <div class="form-group mb-4">
                                                                     <label for="name">Nome/Razão Social</label>
                                                                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Campo obrigatório!
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4">
                                                                 <div class="form-group mb-4">
                                                                     <label for="cpf_cnpj">CPF/CNPJ</label>
-                                                                    <input type="text" class="form-control input-mask" onchange="show();" value="{{ old('cpf_cnpj') }}"  data-inputmask="'mask': '999.999.999-99', 'greedy' : false" id="cpf_cnpj" name="cpf_cnpj" placeholder="999.999.999-99 | 00.000.000/0000-00" required>
+                                                                    <input type="text" class="form-control" value="{{ old('cpf_cnpj') }}" name="cpf_cnpj" id="cpf_cnpj" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Campo obrigatório!
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4">
                                                                 <div class="form-group mb-4">
                                                                     <label for="cep">CEP</label>
-                                                                    <input name="cep" type="text" class="form-control" id="cep" value="" size="10" value="{{ old('cep') }}" maxlength="9"  placeholder="99999-999" onblur="pesquisacep(this.value);" required />
+                                                                    <input name="cep" type="text" class="form-control" id="cep" size="10" value="{{ old('cep') }}" maxlength="9" placeholder="99999-999" onblur="pesquisacep(this.value);" required />
+                                                                    <div class="invalid-feedback">
+                                                                        Campo obrigatório!
+                                                                    </div>
+                                                                    <div id="erro_cep" style="color: red;"></div>
                                                                 </div>
                                                             </div>
 
@@ -117,6 +123,9 @@
                                                                 <div class="form-group mb-4">
                                                                     <label for="rua">Logradouro</label>
                                                                     <input name="public_place" type="text" class="form-control" id="rua" size="60" value="{{ old('public_place') }}" required />
+                                                                    <div class="invalid-feedback">
+                                                                        Campo obrigatório!
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
@@ -131,6 +140,9 @@
                                                                 <div class="form-group mb-4">
                                                                     <label for="uf">UF</label>
                                                                     <input name="uf" type="text" id="uf" size="2" class="form-control" required value="{{ old('uf') }}" />
+                                                                    <div class="invalid-feedback">
+                                                                        Campo obrigatório!
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
@@ -138,13 +150,19 @@
                                                                 <div class="form-group mb-4">
                                                                     <label for="numero">Numero</label>
                                                                     <input name="number" type="text" id="numero" class="form-control" required value="{{ old('number') }}" />
+                                                                    <div class="invalid-feedback">
+                                                                        Campo obrigatório!
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-lg-8">
                                                                 <div class="form-group mb-4">
                                                                     <label for="complemento">Complemento</label>
-                                                                    <input name="complement" type="text" id="complemento" class="form-control" value="{{ old('complement') }}" />
+                                                                    <input name="complement" type="text" id="complemento" class="form-control" value="{{ old('complement') }}" required />
+                                                                    <div class="invalid-feedback">
+                                                                        Campo obrigatório!
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
@@ -160,25 +178,31 @@
                                                     <div class="col-lg-2">
                                                         <div class="form-group mb-8">
                                                             <label for="complemento">Valor</label>
-                                                            <input name="price" type="number" id="valor" class="form-control input-mask text-left" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': '0'" />
+                                                            <input name="price" type="text" id="valor" class="form-control" required />
+                                                            <div class="invalid-feedback">
+                                                                Campo obrigatório!
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-1">
                                                         <div class="form-group mb-4">
                                                             <label for="complemento">Juros %</label>
-                                                            <input name="fees" value="{{ old('fees') }}" type="text" id="valor" class="form-control input-mask text-left"  />
+                                                            <input name="fees" value="{{ old('fees') }}" type="text" id="fees" class="form-control" />
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-2">
                                                         <div class="form-group mb-4">
-                                                            <label for="complemento">Data de Vencimento</label>
-                                                            <input id="input-date1" type="date" value="{{ old('expiration') }}" name="expiration" class="form-control" >
+                                                            <label for="expiration">Data de Vencimento</label>
+                                                            <input id="expiration" type="date" value="{{ old('expiration') }}" name="expiration" class="form-control" required>
+                                                            <div class="invalid-feedback">
+                                                                Campo obrigatório!
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-7">
                                                         <div class="form-group mb-4">
-                                                            <label for="complemento">Instruções</label>
-                                                            <input id="input-date1" value="{{ old('instructions') }}" name="instructions" type="text" class="form-control">
+                                                            <label for="instructions">Instruções</label>
+                                                            <input id="instructions" value="{{ old('instructions') }}" name="instructions" type="text" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -243,12 +267,19 @@
     <!-- form mask -->
     <script src="{{ asset('libs/inputmask/jquery.inputmask.min.js') }}"></script>
 
+    <!-- <script src="{{ asset('mask/dist/jquery.mask.js') }}"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
     <!-- form mask init -->
     <script src="{{ asset('js/pages/form-mask.init.js') }}"></script>
+
+    <script src="{{ asset('js/pages/form-validation.init.js') }}"></script>
 
     <script src="{{ asset('js/app.js') }}"></script>
 
     <script src="{{ asset('js/cep.js') }}"></script>
+
+    <script src="{{ asset('js/mask.js') }}"></script>
 
 </body>
 
