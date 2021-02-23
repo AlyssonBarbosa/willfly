@@ -29,11 +29,9 @@ class BilletRequest extends FormRequest
      */
     public function rules()
     {        
-        $date = date('Y-m-d');
-
         $rules =  [
             'name' => ['required', 'string','between:3,255'],            
-            'expiration' => ['required', 'date', 'after_or_equal:' . $date],
+            'expiration' => ['required', 'date', 'after_or_equal:date'],
             'price' => ['required'],
             'cep' => ['required', 'string', 'size:9'],
             'city' => ['required', 'string','between:3,255'],
@@ -66,8 +64,7 @@ class BilletRequest extends FormRequest
             'public_place.string' => 'O campo LOGRADOURO deve ser uma texto!',
             'public_place.between' => 'O campo LOGRADOURO deve possuir entre 3 e 255 caracteres!',
             'city.required' => 'O campo CIDADE é obrigatório!',
-            'city.between' => 'O campo CIDADE deve possuir entre 3 e 255 caracteres!',
-            'city.string' => 'O campo CIDADE deve ser uma texto!',
+            'public_place.string' => 'O campo CIDADE deve ser uma texto!',
             'price.required' => 'O campo VALOR é obrigatório!',
             'expiration.required' => 'O campo DATA DE VENCIMENTO é obrigatório!',
             'expiration.date' => 'O campo DATA DE VENCIMENTO deve ser uma data!',
