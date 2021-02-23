@@ -23,9 +23,9 @@ class SandBoxController extends Controller
 
             $billets = Billet::withTrashed()->orderBy('created_at', 'DESC')->paginate(10);
 
-            return view('billet.list', compact('billets'));
+            return view('billet.index', compact('billets'));
         } catch (\Throwable $th) {
-            dd($th->getMessage());
+            
         }
     }
 
@@ -36,7 +36,7 @@ class SandBoxController extends Controller
      */
     public function create()
     {
-        return view('billet.index');
+        return view('billet.create');
     }
 
     /**
@@ -60,12 +60,12 @@ class SandBoxController extends Controller
             ]);
 
             if ($address) {
-                
-                $request->price = $this->formatPrice($request->price);                
-                $request->fees =  $this->formatFees($request->fees);
 
-                if($request->price == null){
-                    throw new Exception("O valor do boleto deve ser maior que R$5,00");                   
+                $request->price = $this->formatPrice($request->price);
+                $request->fees =  $this->formatFees($request->fees);
+                
+                if ($request->price == null) {
+                    throw new Exception("O valor do boleto deve ser maior que R$5,00");
                 }
 
                 tap(Billet::create([
@@ -142,7 +142,7 @@ class SandBoxController extends Controller
                     [
                         'description' => 'Boleto Bancario',
                         'quantity' => 1,
-                        'price' => $billet->price * 100,
+                        'price' => (int) $billet->price * 100,
                     ]
                 ],
                 'customer' => [
@@ -159,15 +159,15 @@ class SandBoxController extends Controller
                         'addressLine2' => $billet->address->complement,
                         'streetNumber' => $billet->address->number,
                     ]
-                ],                
+                ],
             ];
 
             if ($billet->fees != null) {
                 $data['interest'] = ['percentage' => $billet->fees];
             }
-            
-            $billet->instructions ? $data['instructionsMsg'] = $billet->instructions : '';            
 
+            $billet->instructions ? $data['instructionsMsg'] = $billet->instructions : '';
+            
             $clientSandBox = new SandBoxClient();
 
             $response = $clientSandBox->request($url, $data, 'POST');
@@ -189,20 +189,22 @@ class SandBoxController extends Controller
                 ];
             }
         } catch (\Throwable $th) {
-            dd($th);
+            return $th->getMessage();
         }
     }
 
     public function formatPrice($price)
     {
-        
-        $price = number_format(str_replace(",",".",str_replace(".","",$price)), 2, '.', '');  
-                
+
+        $price = number_format(str_replace(",", ".", str_replace(".", "", $price)), 2, '.', '');
+        $price = (double) $price;
         return $price >= 5 ?  $price : null;
     }
 
     public function formatFees($fees)
     {
-        return (double) number_format(str_replace(",",".",$fees), 1, '.', ''); 
+        $fees = number_format(str_replace(",", ".", $fees), 1, '.', '');
+        $fees = (double) $fees;
+        return $fees;
     }
 }
