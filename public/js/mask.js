@@ -11,11 +11,11 @@ $(document).ready(function () {
         reverse: true
     });
 
-    function message(icon, title, text){
+    function message(icon, title, text) {
         Swal.fire({
             icon: icon,
             title: title,
-            text: text,        
+            text: text,
         })
     }
 
@@ -24,24 +24,24 @@ $(document).ready(function () {
         $('#register').prop('disabled', true);
         $("#loading").show();
 
-        
-        $("#formu input").each(function () {    
-            
-            if($(this).attr("id") !== 'instructions' && $(this).attr("id") !== 'fees' && $(this).attr("id") !== undefined){
-                console.log($(this).attr("id"))  
+
+        $("#formu input").each(function () {
+
+            if ($(this).attr("id") !== 'instructions' && $(this).attr("id") !== 'fees' && $(this).attr("id") !== undefined) {
+                console.log($(this).attr("id"))
                 if ($(this).val() == "") {
                     cont++;
                 }
-            }            
-            
-        });        
-        if (cont !== 0) {            
+            }
+
+        });
+        if (cont !== 0) {
             $("#loading").hide();
             $("#billing").click();
-            $('#register').prop('disabled', false);      
-            message('error','Ops...','Um erro aconteceu!');
+            $('#register').prop('disabled', false);
+            message('error', 'Ops...', 'Um erro aconteceu!');
         }
-        
+
     });
 
     var options = {
