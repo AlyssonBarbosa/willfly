@@ -27,8 +27,7 @@ $(document).ready(function () {
 
         $("#formu input").each(function () {
 
-            if ($(this).attr("id") !== 'instructions' && $(this).attr("id") !== 'fees' && $(this).attr("id") !== undefined) {
-                console.log($(this).attr("id"))
+            if ($(this).attr("id") !== 'instructions' && $(this).attr("id") !== 'fees' && $(this).attr("id") !== undefined) {                
                 if ($(this).val() == "") {
                     cont++;
                 }
