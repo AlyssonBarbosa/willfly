@@ -61,13 +61,14 @@ class BilletsController extends Controller
             if ($address) {
 
                 $request->price = $this->formatPrice($request->price);
-                $request->fees = $request->fees ? $this->formatFees($request->fees) : '';
-
+                                
+                $request->fees = isset($request->fees) ? $this->formatFees($request->fees) : '';
+                
                 if ($request->price == null) {
                     throw new Exception("O valor do boleto deve ser maior que R$5,00");
                 }
-
-                if ($request->fees == null) {
+                
+                if ($request->fees === null) {                    
                     throw new Exception("O juros deve ser entre 0% e 1%!");
                 }
 
@@ -206,7 +207,7 @@ class BilletsController extends Controller
     public function formatFees($fees)
     {
         $fees = number_format(str_replace(",", ".", $fees), 1, '.', '');
-        $fees = (float) $fees;
+        $fees = (float) $fees;        
         return $fees >= 0 && $fees <= 1 ?  $fees : null;
     }
 }
