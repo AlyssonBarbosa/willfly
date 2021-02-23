@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Requests\BilletRequest;
+use App\Http\Requests\BilletRequest;
 use App\Http\SandBoxClient;
 use App\Models\Address;
 use App\Models\Billet;
@@ -10,7 +10,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class SandBoxController extends Controller
+class BilletsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +25,6 @@ class SandBoxController extends Controller
 
             return view('billet.index', compact('billets'));
         } catch (\Throwable $th) {
-            
         }
     }
 
@@ -63,7 +62,7 @@ class SandBoxController extends Controller
 
                 $request->price = $this->formatPrice($request->price);
                 $request->fees =  $this->formatFees($request->fees);
-                
+
                 if ($request->price == null) {
                     throw new Exception("O valor do boleto deve ser maior que R$5,00");
                 }
@@ -167,7 +166,7 @@ class SandBoxController extends Controller
             }
 
             $billet->instructions ? $data['instructionsMsg'] = $billet->instructions : '';
-            
+
             $clientSandBox = new SandBoxClient();
 
             $response = $clientSandBox->request($url, $data, 'POST');
@@ -197,14 +196,14 @@ class SandBoxController extends Controller
     {
 
         $price = number_format(str_replace(",", ".", str_replace(".", "", $price)), 2, '.', '');
-        $price = (double) $price;
+        $price = (float) $price;
         return $price >= 5 ?  $price : null;
     }
 
     public function formatFees($fees)
     {
         $fees = number_format(str_replace(",", ".", $fees), 1, '.', '');
-        $fees = (double) $fees;
+        $fees = (float) $fees;
         return $fees;
     }
 }
