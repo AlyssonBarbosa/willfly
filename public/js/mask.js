@@ -7,7 +7,7 @@ $(document).ready(function () {
         reverse: true
     });
 
-    $('#fees').mask("#00.00", {
+    $('#fees').mask("0,0", {
         reverse: true
     });
 

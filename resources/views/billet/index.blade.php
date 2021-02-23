@@ -203,23 +203,23 @@
                                             </div>
                                             <div class="tab-pane" id="shipping-info">
                                                 <div class="row">
-                                                    <div class="col-lg-2">
+                                                    <div class="col-lg-3">
                                                         <div class="form-group mb-8">
                                                             <label for="complemento">Valor <span class="required-span">*</span></label>
-                                                            <input name="price" type="text" id="valor" class="form-control" required />
+                                                            <input name="price" type="text" value="{{ old('price') }}" id="valor" class="form-control" required />
                                                             <div class="invalid-feedback">
                                                                 Campo obrigatório!
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-1">
+                                                    <div class="col-lg-3">
                                                         <div class="form-group mb-4">
-                                                            <label for="complemento">Juros %</label>
-                                                            <input name="fees" value="{{ old('fees') }}" type="text" id="fees" class="form-control" />
+                                                            <label for="complemento">Juros</label>
+                                                            <input name="fees" value="{{ old('fees') }}" data-parsley-minlength="0" data-parsley-maxlength="1" type="text" id="fees" class="form-control" placeholder="de 0 a 1" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-2">
-                                                        <div class="form-group mb-4">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group mb-">
                                                             <label for="expiration">Data de Vencimento <span class="required-span">*</span></label>
                                                             <input id="expiration" type="date" value="{{ old('expiration') }}" name="expiration" class="form-control" required>
                                                             <div class="invalid-feedback">
@@ -227,10 +227,10 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-7">
+                                                    <div class="col-lg-12">
                                                         <div class="form-group mb-4">
                                                             <label for="instructions">Instruções</label>
-                                                            <input id="instructions" value="{{ old('instructions') }}" name="instructions" type="text" class="form-control">
+                                                            <input id="instructions" max="100" value="{{ old('instructions') }}" name="instructions" type="text" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>

@@ -61,7 +61,8 @@ class SandBoxController extends Controller
 
             if ($address) {
                 
-                $request->price =  $this->formatPrice($request->price);                
+                $request->price = $this->formatPrice($request->price);                
+                $request->fees =  $this->formatFees($request->fees);
 
                 if($request->price == null){
                     throw new Exception("O valor do boleto deve ser maior que R$5,00");                   
@@ -158,13 +159,14 @@ class SandBoxController extends Controller
                         'addressLine2' => $billet->address->complement,
                         'streetNumber' => $billet->address->number,
                     ]
-                ],
-                'instructionsMsg' =>  $billet->instruction ? $billet->intruction : '',
+                ],                
             ];
 
             if ($billet->fees != null) {
-                $data['interest'] = ['percentage' => $billet->fees / 100];
+                $data['interest'] = ['percentage' => $billet->fees];
             }
+            
+            $billet->instructions ? $data['instructionsMsg'] = $billet->instructions : '';            
 
             $clientSandBox = new SandBoxClient();
 
@@ -197,5 +199,10 @@ class SandBoxController extends Controller
         $price = number_format(str_replace(",",".",str_replace(".","",$price)), 2, '.', '');  
                 
         return $price >= 5 ?  $price : null;
+    }
+
+    public function formatFees($fees)
+    {
+        return (double) number_format(str_replace(",",".",$fees), 1, '.', ''); 
     }
 }
