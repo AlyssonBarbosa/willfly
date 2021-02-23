@@ -62,15 +62,17 @@ class BilletsController extends Controller
 
                 $request->price = $this->formatPrice($request->price);
                                 
-                $request->fees = isset($request->fees) ? $this->formatFees($request->fees) : '';
+                $request->fees = isset($request->fees) ? $this->formatFees($request->fees) : null;
                 
                 if ($request->price == null) {
                     throw new Exception("O valor do boleto deve ser maior que R$5,00");
                 }
-                
-                if ($request->fees === null) {                    
-                    throw new Exception("O juros deve ser entre 0% e 1%!");
+                if(isset($request->fees)){
+                    if ($request->fees === null) {                    
+                        throw new Exception("O juros deve ser entre 0% e 1%!");
+                    }
                 }
+
 
                 tap(Billet::create([
                     'name' => $request->name,
