@@ -29,9 +29,11 @@ class BilletRequest extends FormRequest
      */
     public function rules()
     {        
+        $date = date('Y-m-d');
+
         $rules =  [
             'name' => ['required', 'string','between:3,255'],            
-            'expiration' => ['required', 'date', 'after_or_equal:date'],
+            'expiration' => ['required', 'date', 'after_or_equal:' . $date],
             'price' => ['required'],
             'cep' => ['required', 'string', 'size:9'],
             'city' => ['required', 'string','between:3,255'],
